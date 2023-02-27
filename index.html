@@ -27,7 +27,34 @@
             <li>If you have trouble finding the HTML file, you can check your recent downloads.</li>
         </ol>
     
-        <a href="bookmarks_2_26_23.html" download class="btn btn-primary btn-lg" style="margin-top: 20px;">Download Bookmark Folder</a>
+        <button class="btn btn-primary btn-lg" style="margin-top: 20px;" onclick="authenticatePassword()">Download Bookmark Folder</button>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function authenticatePassword() {
+  var password = prompt("Please enter the password:");
+
+  $.ajax({
+    url: "download.php",
+    type: "POST",
+    data: { password: password },
+    success: function(response) {
+      if (response.status == "success") {
+        var downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(response.bookmarkFolder));
+        downloadLink.setAttribute('download', 'bookmark-folder.html');
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      } else {
+        alert(response.message);
+      }
+    }
+  });
+}
+</script>
+
 
 
     </div>    
