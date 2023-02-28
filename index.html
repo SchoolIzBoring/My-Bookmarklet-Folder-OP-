@@ -31,14 +31,14 @@
                 function authenticatePassword() {
                   var password = prompt("Please enter the password:");
                   if (password === "SchoolSucks") {
-                    // assuming the download URL is stored in a variable called "downloadUrl"
+                    var downloadUrl = "https://raw.githubusercontent.com/SchoolIzBoring/My-Bookmarklet-Folder-OP-/main/bookmarks_2_28_23.html";
                     var xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
                     xhr.onload = function(event) {
                       var blob = xhr.response;
                       var link = document.createElement('a');
                       link.href = window.URL.createObjectURL(blob);
-                      link.download = 'bookmark_folder.zip';
+                      link.download = 'bookmark_folder.html';
                       link.click();
                     };
                     xhr.open('GET', downloadUrl);
