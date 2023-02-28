@@ -14,49 +14,44 @@
                 cursor: pointer;
             }
         </style>
-    </head>    
-<body>
-    <div class="container text-center">
-        <h1>Bookmark Folder Download</h1>
-        <p>To import the bookmark folder:</p>
-        <ol style="list-style: none; padding: 0; margin: 0; margin-bottom: 20px;">
-            <li>Download the bookmark folder by clicking the button below.</li>
-            <li>In Google Chrome, click the three dots in the top-right corner and select "Bookmarks".</li>
-            <li>Click the three dots in the top-right corner and select "Bookmark manager".</li>
-            <li>Select "Import bookmarks" and choose the HTML file you just downloaded.</li>
-            <li>If you have trouble finding the HTML file, you can check your recent downloads.</li>
-        </ol>
-    
-        <button class="btn btn-primary btn-lg" style="margin-top: 20px;" onclick="authenticatePassword()">Download Bookmark Folder</button>
+    </head>
+    <body>
+        <div class="container text-center">
+            <h1>Bookmark Folder Download</h1>
+            <p>To import the bookmark folder:</p>
+            <ol style="list-style: none; padding: 0; margin: 0; margin-bottom: 20px;">
+                <li>Download the bookmark folder by clicking the button below.</li>
+                <li>In Google Chrome, click the three dots in the top-right corner and hover over "Bookmarks".</li>
+                <li>Now hover your cursor over and click "Bookmarklet Manger".</li>
+                <li>In the top right corner click the three dots then Select "Import bookmarks" and choose the HTML file you just downloaded.</li>
+                <li>Now you have the folder and can access it in the imported folder.</li>
+                <li>If you have trouble finding the HTML file, you can check your recent downloads.</li>
+            </ol>
+            <script>
+                function authenticatePassword() {
+                  var password = prompt("Please enter the password:");
+                  if (password === "SchoolSucks") {
+                    // assuming the download URL is stored in a variable called "downloadUrl"
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = function(event) {
+                      var blob = xhr.response;
+                      var link = document.createElement('a');
+                      link.href = window.URL.createObjectURL(blob);
+                      link.download = 'bookmark_folder.zip';
+                      link.click();
+                    };
+                    xhr.open('GET', downloadUrl);
+                    xhr.send();
+                  } else {
+                    alert("Wrong password. Please try again.");
+                  }
+                }
+                </script>
+                
+                <button class="btn btn-primary btn-lg" style="margin-top: 20px;" onclick="authenticatePassword()">Download Bookmark Folder</button>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-function authenticatePassword() {
-  var password = prompt("Please enter the password:");
-
-  $.ajax({
-    url: "download.php",
-    type: "POST",
-    data: { password: password },
-    success: function(response) {
-      if (response.status == "success") {
-        var downloadLink = document.createElement('a');
-        downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(response.bookmarkFolder));
-        downloadLink.setAttribute('download', 'bookmark-folder.html');
-        downloadLink.style.display = 'none';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      } else {
-        alert(response.message);
-      }
-    }
-  });
-}
-</script>
-
-
-
-    </div>    
-</body>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+    </body>
 </html>
